@@ -15,12 +15,10 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     for(int i=0; i<9; i++) {
         mass = max(mass, cell.velocities[i]);
     }
-    
-    mass = max(0., mass -30.);
-   
-    float r = smoothstep(0., 80., mass);
-    float g = smoothstep(0., 120., mass);
-    float b = smoothstep(80., 250., mass);    
+
+    float r = smoothstep(80., 250., mass);
+    float g = smoothstep(100., 400., mass);
+    float b = smoothstep(300., 400., mass);    
     
     fragColor = vec4(r, g, b, 1.);
 }

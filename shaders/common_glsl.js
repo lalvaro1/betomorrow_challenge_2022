@@ -26,9 +26,9 @@ Cell unpack(vec4 rgba) {
     cell.velocities[TOP]      = floor(rgba.r*0.001);    
     cell.velocities[TOPLEFT]  = mod(rgba.g, 1000.);
     cell.velocities[LEFT]     = floor(rgba.g*0.001);    
-    cell.velocities[BOTLEFT]  = mod(rgba.b, 1000.);
-    cell.velocities[BOTTOM]   = mod(floor(rgba.b*0.001), 1000.);
-    cell.velocities[BOTRIGHT] = floor(rgba.b*0.000001);
+    cell.velocities[BOTLEFT]  = mod(rgba.b, 500.);
+    cell.velocities[BOTTOM]   = mod(floor(rgba.b/500.), 500.);
+    cell.velocities[BOTRIGHT] = floor(rgba.b/(500.*500.));
     
     return cell;
 }
@@ -39,7 +39,7 @@ vec4 pack(Cell cell) {
     rgba.a = floor(min(999.99, cell.velocities[CENTER]))  + floor(min(999.99, cell.velocities[RIGHT]))  * 1000.;
     rgba.r = floor(min(999.99, cell.velocities[TOPRIGHT]))+ floor(min(999.99, cell.velocities[TOP]))    * 1000.;
     rgba.g = floor(min(999.99, cell.velocities[TOPLEFT])) + floor(min(999.99, cell.velocities[LEFT]))   * 1000.;
-    rgba.b = floor(min(999.99, cell.velocities[BOTLEFT])) + floor(min(999.99, cell.velocities[BOTTOM])) * 1000. + floor(min(999.99, cell.velocities[BOTRIGHT]))*1000000.;    
+    rgba.b = floor(min(499.99, cell.velocities[BOTLEFT])) + floor(min(499.99, cell.velocities[BOTTOM])) * 500. + floor(min(499.99, cell.velocities[BOTRIGHT]))*500.*500.;    
     
     return rgba;
 }

@@ -69,7 +69,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         vec2 source2 = vec2(iResolution.x/2. * (1. - cos(synchro)*0.5), iResolution.y/2. * (1. - sin(1.*synchro)*0.5));        
 
         float density = getDensity(source1, fragCoord, 400., 0.05) + getDensity(source2, fragCoord, 400., 0.05);
-        if(iMouse.z>0.) density += getDensity(iMouse.xy, fragCoord, 50., 0.025);
+        if(iMouse.z>0.) density += getDensity(iMouse.xy, fragCoord, 150., 0.025);
 
         for(int i=0; i<9; i++) cell.velocities[i] += density*weight[i];
 
@@ -87,7 +87,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         }
 
         //equilibrium    
-        float tau = 15.;
+        float tau = 1.;
 
         for(int i=0; i<9; i++) {
 
@@ -98,10 +98,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
             float cs = 1./1.73;    
 
             float eq = equilibrium(w, rho, u, c, cs);
+
             cell.velocities[i] = cell.velocities[i] - (1./tau)*(cell.velocities[i] - eq);
             
-            cell.velocities[i] = max(8., cell.velocities[i]);
-            cell.velocities[i] = min(300., cell.velocities[i]);            
+            cell.velocities[i] = max(7., cell.velocities[i]);
+            cell.velocities[i] = min(480., cell.velocities[i]);            
             
         }                
    
