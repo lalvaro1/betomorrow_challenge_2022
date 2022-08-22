@@ -17,7 +17,7 @@ float equilibrium(float w, float rho, vec2 u, vec2 c, float cs) {
     
     float eq = w*rho*(1. + c_dot_u/(cs*cs) + (c_dot_u*c_dot_u)/(2.*cs*cs*cs*cs) - u_dot_u/(2.*cs*cs) );
 
-    return eq * 0.999;
+    return eq ;//* 0.999;
 }
 
 float getMass(Cell cell) {
@@ -49,7 +49,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
         Cell c;
 
-        float density = border ? 0. : 100.;
+        float density = border ? 0. : 00.;
 
         for(int i=0;i<9;i++) {
             c.velocities[i] = density * weight[i];
@@ -61,8 +61,6 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
         Cell cell = unpack(texelFetch(layer1, cellCoords, 0));
 
-        //vec4 iMouse = vec4(500.,500.,1.,1.);
-
         // sources
         float synchro = float(iFrame) * 1./60.; 
         vec2 source1 = vec2(iResolution.x/2. * (1. + cos(synchro)*0.5), iResolution.y/2. * (1. + sin(2.*synchro)*0.5));
@@ -70,8 +68,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
         float density = getDensity(source1, fragCoord, 400., 0.05) + getDensity(source2, fragCoord, 400., 0.05);
         if(iMouse.z>0.) density += getDensity(iMouse.xy, fragCoord, 150., 0.025);
-
-        for(int i=0; i<9; i++) cell.velocities[i] += density*weight[i];
+        
 
         // collisions
         vec2 momentum = vec2(0.);
@@ -87,7 +84,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         }
 
         //equilibrium    
-        float tau = 1.;
+        float tau = 2.;
 
         for(int i=0; i<9; i++) {
 
@@ -101,11 +98,14 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
             cell.velocities[i] = cell.velocities[i] - (1./tau)*(cell.velocities[i] - eq);
             
-            cell.velocities[i] = max(7., cell.velocities[i]);
+            cell.velocities[i] = max(8., cell.velocities[i]);
             cell.velocities[i] = min(480., cell.velocities[i]);            
             
         }                
-   
+
+        for(int i=0; i<9; i++) cell.velocities[i] += density*weight[i];
+
+
         fragColor = pack(cell);
     }
 }

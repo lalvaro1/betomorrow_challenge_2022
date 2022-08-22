@@ -95,13 +95,13 @@ function main() {
     layer2_uniforms.iFrame.value = iFrame++;    
 
     layer2_uniforms.iMouse.value = new THREE.Vector4(mousePos.x, canvas.height-mousePos.y, 1, 1);
-
+if(iFrame<200000) {
     renderer.setRenderTarget(renderTarget2);
     renderer.render(lay2_scene, camera);
 
     renderer.setRenderTarget(renderTarget1);
     renderer.render(lay1_scene, camera);
-
+}
     renderer.setRenderTarget(null);
     renderer.render(main_scene, camera); 
     
