@@ -59,7 +59,12 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     }
     else {
 
-        Cell cell = unpack(texelFetch(layer1, cellCoords, 0));
+        // flow
+        //vec2 flow = (iMouse.xy - iResolution.xy*0.5)/iResolution.xy;
+        //ivec2 flowVelocity = ivec2(flow*10.);
+        ivec2 flowVelocity = ivec2(0,2);
+
+        Cell cell = unpack(texelFetch(layer1, cellCoords + flowVelocity, 0));
 
         // sources
         float synchro = float(iFrame) * 1./60.; 
