@@ -5,14 +5,27 @@
 		<link rel="stylesheet" href="./demo.css">
 	</head>
 	<body>
+		<P id="title" class="title">Creative Challenge Summer 2022</P>
+		<P id="message" class="cta"></P>		
+		<button id="changeEffectButton" class="effectButton">Next</button>
 		<script src="./lib/three.min.js"></script>
-		<script src="./shaders/common_glsl.js"></script>		
-		<script src="./shaders/stream_fragment_glsl.js"></script>
-		<script src="./shaders/collide_fragment_glsl"></script>
-		<script src="./shaders/main_glsl.js"></script>		
+		<script src="./common/CanvasDemoEffect.js"></script>
+
+		<script src="./water/shaders/water_FragmentShader.glsl"></script>		
+		<script src="./water/WaterEffect.js"></script>				
+
+		<script src="./lbm/shaders/common_fragment.glsl"></script>		
+		<script src="./lbm/shaders/collide_fragment.glsl"></script>		
+		<script src="./lbm/shaders/main_fragment.glsl"></script>		
+		<script src="./lbm/shaders/stream_fragment.glsl"></script>								
+		<script src="./lbm/LBMEffect.js"></script>				
+
 		<script src="./demo.js"></script>
 	</body>
 </html>
+
+
+
 
 
 
