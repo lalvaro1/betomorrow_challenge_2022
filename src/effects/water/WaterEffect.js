@@ -4,7 +4,7 @@ class WaterEffect extends CanvasDemoEffect {
         super();
 
         super.message = "I'm clickable.";
-        super.textColor = "#444444";        
+        super.textColor = "#444444AA";        
 
         this.NB_WAVES = 10;  
         this.WAVE_DURATION = 3.;

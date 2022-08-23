@@ -5,7 +5,7 @@ class LBMEffect extends CanvasDemoEffect {
     super();
 
     super.message = "";
-    super.textColor = "#EEEEEE";       
+    super.textColor = "#FFFFFFAA";       
 
     this.main_uniforms = {};
     this.layer1_uniforms = null;

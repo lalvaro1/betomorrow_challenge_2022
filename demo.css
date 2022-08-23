@@ -9,9 +9,9 @@ canvas {
 .title {
   position: absolute;
   font-weight: bold;
-  font-size: 5em;
+  font-size: 4em;
   font-family: 'Arial';
-  color: #212121;  
+  color: #212121b9;  
   top: 10%;
   left: 50%;
   transform: translate(-50%, -100%);  
@@ -30,11 +30,11 @@ canvas {
 
 .effectButton {
   position: absolute;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-family: 'Arial';
   color: #ffffff;
   text-decoration: none;
-  background: #6930ed;
+  background: #6930edc0;
   padding: 10px;
   padding-left: 30px;
   padding-right: 30px;  
@@ -46,5 +46,5 @@ canvas {
   top: 90%;
   left: 50%;
   transform: translate(-50%, -100%);  
-  box-shadow: 5px 5px 5px 1px #0000007f;
+  box-shadow: 3px 3px 3px 1px #0000002d;
 }

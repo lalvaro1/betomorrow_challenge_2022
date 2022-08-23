@@ -8,7 +8,7 @@ uniform vec3[10] waves;
 out vec4 fragColor;
 
 const float WAVE_SPEED       = 300.;
-const float WAVE_HEIGHT      = 1.0;
+const float WAVE_HEIGHT      = 3.0;
 const float WAVE_DURATION    = 5.;
 const float WAVE_PERIOD      = 0.06;
 const float WAVE_ATTENUATION = 0.01;
@@ -59,7 +59,14 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 light = normalize(vec3(1.0));
     float diffuse = max(dot(light, normal),-1.);
     
-    fragColor = vec4(vec3(0.33 + diffuse), 1.);
+    float diagonalGradient = (1.-fragCoord.y/iResolution.y) * fragCoord.x/iResolution.x;
+    vec4 color1 = vec4(1.);
+    vec4 color2 = vec4(230./255., 225./255., 243./255., 1.);    
+    float bias = 1.;
+
+    vec4 baseColor = mix(color1, color2, pow(diagonalGradient, bias));
+
+    fragColor = vec4(vec3(0.33 + diffuse), 1.) * baseColor;
 }
 
 void main() {
