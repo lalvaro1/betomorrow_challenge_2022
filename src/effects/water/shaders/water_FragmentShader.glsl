@@ -43,6 +43,9 @@ float h(vec2 p) {
     return h;
 }
 
+const vec3 GRADIENT_COLOR1 = vec3(255.,255.,255.);
+const vec3 GRADIENT_COLOR2 = vec3(204.,182.,255.);
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     vec2 uv = fragCoord/iResolution.xy - 0.5;
@@ -60,11 +63,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float diffuse = max(dot(light, normal),-1.);
     
     float diagonalGradient = (1.-fragCoord.y/iResolution.y) * fragCoord.x/iResolution.x;
-    vec4 color1 = vec4(1.);
-    vec4 color2 = vec4(230./255., 225./255., 243./255., 1.);    
-    float bias = 1.;
+    float bias = 3.;
 
-    vec4 baseColor = mix(color1, color2, pow(diagonalGradient, bias));
+    vec4 baseColor = vec4(mix(GRADIENT_COLOR1, GRADIENT_COLOR2, pow(diagonalGradient, bias))/255., 1.);
 
     fragColor = vec4(vec3(0.33 + diffuse), 1.) * baseColor;
 }

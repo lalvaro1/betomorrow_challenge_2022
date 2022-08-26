@@ -1,9 +1,15 @@
 class CanvasDemoEffect {
 
     constructor() {
+
         this.mouse = { x: -9999, y: -9999 };
-        this.textColor = "#888888";
-        this.message = "No message.";
+
+        this.pageOptions = {
+            titleColor : "#888888",
+            messageColor : "No message.",
+            messageText : "No message.",
+            buttonColor : "#6930edc0"
+        }
     }
 
     init()              {}

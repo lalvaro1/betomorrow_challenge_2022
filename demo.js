@@ -1,96 +1,112 @@
 
-
-var renderer = null;
-
-
-const changeEffectButton = document.getElementById("changeEffectButton");
-
-changeEffectButton.addEventListener ("click", function() {
-  nextEffect();
-});
-
-var frame = 0;
-var currentEffect = null;
 const canvasEffects = [ new WaterEffect(), new LBMEffect()];
-var effectIndex = -1;
 
-function nextEffect() {
+class AutumnChallenge {
 
-  if(currentEffect) {
-    currentEffect.release();
-  }
-
-  effectIndex = (effectIndex + 1) % canvasEffects.length;
-
-  currentEffect = canvasEffects[effectIndex];
-  currentEffect.init();
-
-  const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-
-  currentEffect.setSize(width, height);
-
-  document.getElementById("title").style.color = currentEffect.textColor;  
-  document.getElementById("message").style.color = currentEffect.textColor;    
-  document.getElementById("message").innerHTML = currentEffect.message;
-
-  frame = 0;
-}
-
-function main() {
-
-  renderer = new THREE.WebGLRenderer();
-  document.body.appendChild( renderer.domElement );  
-
-  nextEffect();
-
-  document.onmousemove = handleMouseMove;
-  
-  function handleMouseMove(event) {
-      event = event || window.event; 
-
-      currentEffect.mouse.x = event.pageX;
-      currentEffect.mouse.y = event.pageY;      
-  }
-
-  function onClick(event) {
-    currentEffect.onClick(event.pageX, event.pageY);
-  }
-
-  document.addEventListener("click", onClick);
-
-  
-   
-  function resizeRendererToDisplaySize(renderer) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-
-    if (needResize) {
-      renderer.setSize(width, height, false);
-      currentEffect.setSize(width, height);
-      frame = 0;
+    constructor() {
+      this.renderer = null;
+      this.frame = 0;
+      this.currentEffect = null;
+      this.effectIndex = -1;
     }
-    return needResize;
-  }
-
-  function render(time) {
-
-    resizeRendererToDisplaySize(renderer);
-
-    currentEffect.update(time*0.001, frame);
-    currentEffect.render(renderer);
     
-    frame++;
+    updatePage(pageOptions) {
+      document.getElementById("title1").style.color = pageOptions.textColor;  
+      document.getElementById("title2").style.color = pageOptions.textColor.substring(0, 7) + "FF";        
+      document.getElementById("message").style.color = pageOptions.messageColor;    
+      document.getElementById("message").innerHTML = pageOptions.messageText;
+      document.getElementById("changeEffectButton").style.background = pageOptions.buttonColor;
+    }
 
-    requestAnimationFrame(render);
-  }
+    nextEffect = () => {
 
-  requestAnimationFrame(render);
+      if(this.currentEffect) {
+        this.currentEffect.release();
+      }
+    
+      this.effectIndex = (this.effectIndex + 1) % canvasEffects.length;
+    
+      this.currentEffect = canvasEffects[this.effectIndex];
+      this.currentEffect.init();
+    
+      const canvas = this.renderer.domElement;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+    
+      this.currentEffect.setSize(width, height);
+      this.updatePage(this.currentEffect.pageOptions);
+    
+      this.frame = 0;
+    }
+    
+    canvasSetup() {
+      this.renderer = new THREE.WebGLRenderer();
+      document.body.appendChild(this.renderer.domElement);  
+    }
+
+    onClick = (event) => {
+      this.currentEffect.onClick(event.pageX, event.pageY);
+    }
+
+    mouseSetup() {
+      document.onmousemove = (event) => {
+          this.currentEffect.mouse = {x:event.pageX, y: event.pageY};      
+      }
+    
+      document.addEventListener("click", this.onClick);
+    
+    }
+
+    resizeRendererToDisplaySize() {
+      const canvas = this.renderer.domElement;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const needResize = canvas.width !== width || canvas.height !== height;
+  
+      if (needResize) {
+        this.renderer.setSize(width, height, false);
+        this.currentEffect.setSize(width, height);
+        this.frame = 0;
+      }
+      return needResize;
+    }
+  
+    render = (time) => {
+  
+      this.resizeRendererToDisplaySize();
+  
+      this.currentEffect.update(time*0.001, this.frame);
+      this.currentEffect.render(this.renderer);
+      
+      this.frame++;
+  
+      requestAnimationFrame(this.render);
+    }
+
+    run() {
+
+      this.canvasSetup();
+      this.nextEffect();
+      this.mouseSetup();
+      this.buttonSetup();
+      
+      requestAnimationFrame(this.render);
+    }
+
+    buttonSetup() {  
+      const changeEffectButton = document.getElementById("changeEffectButton");
+      changeEffectButton.onclick = () => { this.nextEffect(); };
+    }
 }
 
+const demo = new AutumnChallenge();
+demo.run();
 
+/*
+therascience : complements alimentaires, formations webinars
+formations en VR au pro de la santé
+300 personnes
 
-main();
+remplacer un événement en présentiel par un événement VR
+virbela
+*/

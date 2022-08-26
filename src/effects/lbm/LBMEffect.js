@@ -4,8 +4,9 @@ class LBMEffect extends CanvasDemoEffect {
 
     super();
 
-    super.message = "";
-    super.textColor = "#FFFFFFAA";       
+    this.pageOptions.messageText = "";
+    this.pageOptions.textColor = "#00FF00AA";       
+    this.pageOptions.buttonColor = "#00FF00AA";       
 
     this.main_uniforms = {};
     this.layer1_uniforms = null;
@@ -117,13 +118,3 @@ class LBMEffect extends CanvasDemoEffect {
 
   }
 }
-
-/*
-var mousePos = { x: 0, y: 0};
-document.onmousemove = handleMouseMove;
-
-function handleMouseMove(event) {
-    event = event || window.event; 
-    mousePos = { x: event.pageX, y: event.pageY };
-}
-*/

@@ -20,9 +20,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     float g = smoothstep(100., 400., mass);
     float b = smoothstep(300., 400., mass);    
     
-    fragColor = vec4(r, g, b, 1.);
+    vec3 background = vec3(0,0,0);
 
-    //fragColor = vec4(0,1,0,1);
+    fragColor = vec4(vec3(r, g, b) + background, 1.);
 }
 
 void main() {
