@@ -1,5 +1,5 @@
-
-const canvasEffects = [ new WaterEffect(), new LBMEffect()];
+const earth_demo_url = 'http://lalvaro-test.s3-website-eu-west-1.amazonaws.com/babylon-earth-demo/';
+const canvasEffects = [ new WaterEffect(), new LBMEffect(), new JuliaEffect(), null];
 
 class AutumnChallenge {
 
@@ -8,6 +8,7 @@ class AutumnChallenge {
       this.frame = 0;
       this.currentEffect = null;
       this.effectIndex = -1;
+      this.mouse = {x:0, y:0};
     }
     
     updatePage(pageOptions) {
@@ -25,9 +26,16 @@ class AutumnChallenge {
       }
     
       this.effectIndex = (this.effectIndex + 1) % canvasEffects.length;
-    
+
       this.currentEffect = canvasEffects[this.effectIndex];
-      this.currentEffect.init();
+
+      if(this.currentEffect == null) {
+        document.location.href = earth_demo_url;
+      }
+      else {
+        this.currentEffect.init();
+        this.currentEffect.mouse = this.mouse;
+      }
     
       const canvas = this.renderer.domElement;
       const width = canvas.clientWidth;
@@ -50,7 +58,8 @@ class AutumnChallenge {
 
     mouseSetup() {
       document.onmousemove = (event) => {
-          this.currentEffect.mouse = {x:event.pageX, y: event.pageY};      
+          this.mouse = {x:event.pageX, y: event.pageY};      
+          this.currentEffect.mouse = this.mouse;
       }
     
       document.addEventListener("click", this.onClick);

@@ -5,8 +5,8 @@ class LBMEffect extends CanvasDemoEffect {
     super();
 
     this.pageOptions.messageText = "";
-    this.pageOptions.textColor = "#00FF00AA";       
-    this.pageOptions.buttonColor = "#00FF00AA";       
+    this.pageOptions.textColor = "#ff7f0099";       
+    this.pageOptions.buttonColor = "#ff7f00";       
 
     this.main_uniforms = {};
     this.layer1_uniforms = null;
